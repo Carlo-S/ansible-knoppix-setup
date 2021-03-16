@@ -3,7 +3,8 @@
 
 - name: partition an empty harddisk
   hosts: all
-  remote_user: root
+  become: yes 
+    #remote_user: root
 
   roles:
     - knoppix-partitions

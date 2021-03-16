@@ -1,0 +1,30 @@
+---
+# This playbook partitions a clean harddisk with knoppix partitions
+#
+
+- name: Create boot partition
+  parted:
+    device: /dev/sda
+    number: 1
+    #name: boot
+    part_end: 5GB
+    state: present
+
+- name: Create conf partition
+  parted:
+    device: /dev/sda
+    number: 2
+    #name: conf
+    part_start: 5GB
+    part_end: 5.5GB
+    state: present
+
+- name: Create data partition
+  parted:
+    device: /dev/sda
+    number: 3
+    #name: conf
+    part_start: 5.5GB
+    part_end: 30GB
+    state: present
+
