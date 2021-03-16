@@ -1,0 +1,9 @@
+---
+# This playbook installs knoppix on harddisk on all sites
+
+- name: partition an empty harddisk
+  hosts: all
+  remote_user: root
+
+  roles:
+    - knoppix-partitions
