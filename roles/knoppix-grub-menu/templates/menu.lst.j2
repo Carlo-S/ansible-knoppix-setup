@@ -1,0 +1,46 @@
+default 0
+timeout 30
+color cyan/blue white/blue
+
+# key definitions for a keyboard layout better suited to german keyboards
+# this cannot be complete, but does not need to be
+# to unset just type "setkey" (without parameters) on the GRUB command line
+setkey y z
+setkey z y
+setkey Y Z
+setkey Z Y
+setkey equal parenright
+setkey parenright parenleft
+setkey parenleft asterisk
+setkey doublequote at
+setkey plus bracketright
+setkey minus slash
+setkey slash ampersand
+setkey ampersand caret
+setkey underscore question
+setkey question underscore
+setkey semicolon less
+setkey less backslash
+setkey colon greater
+setkey greater bar
+setkey asterisk braceright
+
+# Optionen aus hd-install
+# kernel	/boot/vmlinuz-4.9.6-64 root=/dev/sda1 rootwait lang=de apm=power-off nomce libata.force=noncq tz=localtime loglevel=1 lang=de apm=power-off initrd=minirt.gz nomce libata.force=noncq hpsa.hpsa_allow_any=1 loglevel=1 rw
+
+title		Knoppix {{ knoppix-version }} Poor Man's Installation - no image - , ro, 64bit, kernel {{ kernel-version }} 
+root		(hd0,0)
+kernel          /boot/vmlinuz-{{ kernel-version }}-64 root=/dev/sda1 ro ramdisk_size=100000 lang=de apm=power-off nomce quiet xmodule=vmware fromhd=/dev/sda1 myconf=/dev/sda2 noimage
+initrd		/boot/minirt.gz
+savedefault
+
+title		Knoppix {{ knoppix-version }} Poor Man's Installation - no image - , rw, 64bit, kernel {{ kernel-version }} 
+root		(hd0,0)
+kernel          /boot/vmlinuz-{{ kernel-version }}-64 root=/dev/sda1 rw ramdisk_size=100000 lang=de apm=power-off nomce quiet xmodule=vmware fromhd=/dev/sda1 myconf=/dev/sda2 noimage
+initrd		/boot/minirt.gz
+savedefault
+
+#title		Windows 10 Pro
+#root		(hd0,3)
+#makeactive
+#chainloader	+1
