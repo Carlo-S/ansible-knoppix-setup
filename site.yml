@@ -9,3 +9,4 @@
   roles:
     - knoppix-partitions
     - knoppix-copy
+    - knoppix-grub-menu

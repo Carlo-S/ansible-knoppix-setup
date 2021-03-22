@@ -1,0 +1,4 @@
+- name: Adding poor man's menu.lst
+  template:
+    src: menu.lst.j2
+    dest: /mnt/boot/boot/grub/menu.lst
