@@ -3,33 +3,34 @@
     src: /mnt-system/KNOPPIX
     dest: /mnt/boot
 
-- name: Sync syslinux to /mnt/boot
-  synchronize:
-    src: /mnt-system/boot/syslinux
-    dest: /mnt/boot
+#- name: Sync isolinux to /mnt/boot
+#  synchronize:
+#    src: /mnt-system/boot/isolinux
+#    dest: /mnt/boot
 
-- name: Sync isolinux to /mnt/boot
-  synchronize:
-    src: /mnt-system/boot/isolinux
-    dest: /mnt/boot
+      #- name: Sync syslinux to /mnt/boot
+      #  file:
+      #    src: /mnt/boot/isolinux
+      #    dest: /mnt/boot/symlinux
+      #    state: link
 
 - name: Sync /boot to /mnt/boot
   synchronize:
     src: /boot
     dest: /mnt/boot
-#    copy_links: yes
+    copy_links: yes
 
-- name: Create syslinux link to /mnt/boot
-  file:
-    dest: /mnt/boot/boot/syslinux
-    src: /mnt-system/boot/syslinux
-    state: link
+      #- name: Create syslinux link to /mnt/boot
+      #  file:
+      #    dest: /mnt/boot/boot/syslinux
+      #    src: /mnt-system/boot/syslinux
+      #    state: link
 
-- name: Create isolinux link to /mnt/boot
-  file:
-    dest: /mnt/boot/boot/isolinux
-    src: /mnt-system/boot/isolinux
-    state: link
+      #- name: Create isolinux link to /mnt/boot
+      #  file:
+      #    dest: /mnt/boot/boot/isolinux
+      #    src: /mnt-system/boot/isolinux
+      #    state: link
 
 - name: Copy minirt.gz to /mnt/boot
   copy:
