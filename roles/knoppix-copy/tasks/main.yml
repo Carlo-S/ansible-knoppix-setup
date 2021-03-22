@@ -5,12 +5,12 @@
 
 - name: Sync syslinux to /mnt/boot
   synchronize:
-    src: /mnt-system/syslinux
+    src: /mnt-system/boot/syslinux
     dest: /mnt/boot
 
 - name: Sync isolinux to /mnt/boot
   synchronize:
-    src: /mnt-system/isolinux
+    src: /mnt-system/boot/isolinux
     dest: /mnt/boot
 
 - name: Sync /boot to /mnt/boot

@@ -10,3 +10,4 @@
     - knoppix-partitions
     - knoppix-copy
     - knoppix-grub-menu
+    - knoppix-grub-install

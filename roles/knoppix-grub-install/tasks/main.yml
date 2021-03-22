@@ -1,0 +1,8 @@
+- name: Install grub package
+  apt:
+    name: grub
+    state: present
+
+- name: Install grub on boot sector
+  shell:
+    cmd: grub-install --recheck --root-directory=/mnt/boot /dev/sda
