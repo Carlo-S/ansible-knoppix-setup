@@ -7,7 +7,7 @@
     #remote_user: root
 
   roles:
-    - knoppix-partitions
-    - knoppix-copy
-    - knoppix-grub-menu
+    #- knoppix-partitions
+    #- knoppix-copy
+    #- knoppix-grub-menu
     - knoppix-grub-install

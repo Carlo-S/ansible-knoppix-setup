@@ -3,6 +3,13 @@
     name: grub
     state: present
 
+- name: Scan block devices
+  command: 'lsblk -J'
+  register: results
+
+- debug:
+    var: results.stdout.blockdevices
+
 - name: Install grub on boot sector
   shell:
     cmd: grub-install --recheck --root-directory=/mnt/boot /dev/sda
