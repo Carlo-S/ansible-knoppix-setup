@@ -17,12 +17,19 @@
   synchronize:
     src: /boot
     dest: /mnt/boot
-    copy_links: yes
+#    copy_links: yes
 
-- name: Copy syslinux link to /mnt/boot
-  copy:
-    dest: /mnt/boot/boot
+- name: Create syslinux link to /mnt/boot
+  file:
+    dest: /mnt/boot/boot/syslinux
     src: /mnt-system/boot/syslinux
+    state: link
+
+- name: Create isolinux link to /mnt/boot
+  file:
+    dest: /mnt/boot/boot/isolinux
+    src: /mnt-system/boot/isolinux
+    state: link
 
 - name: Copy minirt.gz to /mnt/boot
   copy:
