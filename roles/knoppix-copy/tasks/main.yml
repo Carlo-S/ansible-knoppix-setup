@@ -3,11 +3,26 @@
     src: /mnt-system/KNOPPIX
     dest: /mnt/boot
 
+- name: Sync syslinux to /mnt/boot
+  synchronize:
+    src: /mnt-system/syslinux
+    dest: /mnt/boot
+
+- name: Sync isolinux to /mnt/boot
+  synchronize:
+    src: /mnt-system/isolinux
+    dest: /mnt/boot
+
 - name: Sync /boot to /mnt/boot
   synchronize:
     src: /boot
     dest: /mnt/boot
     copy_links: yes
+
+- name: Copy syslinux link to /mnt/boot
+  copy:
+    dest: /mnt/boot/boot
+    src: /mnt-system/boot/syslinux
 
 - name: Copy minirt.gz to /mnt/boot
   copy:
