@@ -48,7 +48,7 @@
     path: /mnt/conf
     state: directory
 
-- name: Mount boot partition
+- name: Mount conf partition
   mount:
     path: /mnt/conf
     src: /dev/sda2
@@ -75,7 +75,7 @@
     path: /mnt/data
     state: directory
 
-- name: Mount boot partition
+- name: Mount data partition
   mount:
     path: /mnt/data
     src: /dev/sda3
