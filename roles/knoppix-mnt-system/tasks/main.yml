@@ -1,0 +1,16 @@
+- name: Install jmespath 
+  pip:
+    name: jmespath 
+    state: present
+
+- name: Scan block devices
+  command: 'lsblk --fs --list --json'
+  register: results
+
+- name: Analyze block devices
+  set_fact:
+    mnt_system_fstype: "{{ results.stdout | from_json | json_query(\"blockdevices[?mountpoint == '/mnt-system'].fstype[] | [0]\") }}"
+    #mnt_system_fstype: "{{ results.stdout | from_json | json_query(\"blockdevices[].children[?mountpoint == '/mnt-system'].fstype[] | [0]\") }}" # --tree version
+
+- debug:
+    var: mnt_system_fstype
