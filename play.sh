@@ -1,2 +1,2 @@
 #!/bin/bash
-ansible-playbook -i hosts site.yml
+ansible-playbook -vvv -i hosts site.yml

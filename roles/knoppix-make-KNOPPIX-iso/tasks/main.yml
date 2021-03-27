@@ -1,0 +1,40 @@
+- name: Pycdlib needed
+  pip:
+    name: pycdlib
+    state: present
+
+- name: Create tmp/KNOPPIX3
+  file:
+    path: /tmp/KNOPPIX3/etc/init.d
+    recurse: yes
+    state: directory
+
+- name: Copy knoppix-autoconfig
+  copy:
+    src: /etc/init.d/knoppix-autoconfig
+    dest: /tmp/KNOPPIX3/etc/init.d/knoppix-autoconfig
+
+#- name: Create KNOPPIX3 file
+#  community.general.iso_create:
+#    dest_iso: /mnt/boot/KNOPPIX/KNOPPIX3
+#    joliet: 3
+#    interchange_level: 4
+#    rock_ridge: "1.12"
+#    src_files:
+#      - /tmp/KNOPPIX3/
+
+- name: Detect size of iso image
+  shell:
+    cmd: mkisofs -v -R -U -V 'KNOPPIX.net filesystem' -P 'KNOPPIX www.knoppix.net' -hide-rr-moved -input-charset default -iso-level 4 -cache-inodes -no-bak -pad --print-size /tmp/KNOPPIX3
+  register: iso_size
+
+- name: Print (debug) iso-size
+  debug:
+    var: iso_size.stdout
+
+- name: Create iso image
+  shell:
+    cmd: mkisofs -v -R -U -V 'KNOPPIX.net filesystem' -P 'KNOPPIX www.knoppix.net' -hide-rr-moved -input-charset default -iso-level 4 -cache-inodes -no-bak -pad /tmp/KNOPPIX3 | /usr/bin/create_compressed_fs -v -s {{ iso_size.stdout }}i - /mnt/boot/KNOPPIX/KNOPPIX3
+
+
+
