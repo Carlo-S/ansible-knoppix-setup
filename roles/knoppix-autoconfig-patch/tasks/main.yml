@@ -1,0 +1,4 @@
+- name: Patch knoppix-autoconfig
+  patch:
+    dest: /etc/init.d/knoppix-autoconfig
+    src: knoppix-autoconfig-patch-cs

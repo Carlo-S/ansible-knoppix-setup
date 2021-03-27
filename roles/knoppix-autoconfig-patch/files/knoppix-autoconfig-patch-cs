@@ -1,0 +1,134 @@
+*** knoppix-autoconfig7.3	2016-03-25 10:49:04.480112377 +0100
+--- knoppix-autoconfig7.3cs	2016-03-25 10:49:04.496779044 +0100
+***************
+*** 3,8 ****
+--- 3,9 ----
+  # Auto-configuration and setup for Knoppix
+  # (C) Klaus Knopper June 2013
+  # License: GPL V2
++ # Modified by Carlo Scharnhorst 04/2014 to support old knoppix.sh
+  
+  export PATH="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
+  
+***************
+*** 949,954 ****
+--- 950,1068 ----
+  # Actually, there should't be any.
+  # wait
+  
++ # Carlo Scharnhorst 04/2014: Take old "knoppix.sh" configuration code
++ # Check for configuration floppy add-on if not running from HD
++ 
++ # Try to mount this filesystem read-only, without or with encryption
++ # trymount device|file mountpoint
++ trymount(){
++  # Check if already mounted
++  case "$(cat /proc/mounts)" in *\ $2\ *) return 0;; esac
++  # Create target directory if it doesn't exist yet
++  [ -d "$2" ] || mkdir -p "$2"
++  RC=""
++  # Apparently, mount-aes DOES autodetect AES loopback files.
++  [ -b "$1" ] && { mount -t auto -o ro "$1" "$2" 2>/dev/null; RC="$?"; }
++  # We need to mount crypto-loop files with initial rw support
++  [ -f "$1" ] && { mount -t auto -o loop,rw "$1" "$2" 2>/dev/null; RC="$?"; }
++  # Mount succeeded?
++  [ "$RC" = "0" ] && return 0
++  echo ""
++  echo "${CYAN}Filesystem not autodetected, trying to mount $1 with AES256 encryption${NORMAL}"
++  sleep 2
++  a="y"
++  while [ "$a" != "n" -a "$a" != "N" ]; do
++   # We need to mount crypto-loop files with initial rw support
++   PW="$(dialog --title "Encrypted Partition?" --stdout --insecure --passwordbox "Please enter decryption password:" 8 40)"
++   [ "$?" != "0" ] && break
++   mount -p0 -t auto -o loop,rw,encryption=AES256 "$1" "$2" <<EOT
++ $PW
++ EOT
++   [ "$?" = "0" ] && { unset PW; return 0; }
++   unset PW
++   echo -n "${RED}Mount failed, retry? [Y/n] ${NORMAL}"
++   read a
++  done
++  return 1
++ }
++ 
++ # Compatibility: Check if we want the config floppy
++ MYCONF=""
++ MYCONFDIR=""
++ MYCONFIG=""
++ if checkbootparam floppyconf; then
++  MYCONF="yes"; MYCONFDIR="/media/fd0"
++ else
++  for opt in myconfig myconf custom config; do
++   MYCONFDIR="$(getbootparam $opt 2>/dev/null)"
++   if [ -n "$MYCONFDIR" ]; then
++    MYCONF="yes"
++    break
++   fi
++  done
++  # Bugfix for myconfig=/media/fd0
++  case "$MYCONFDIR" in *floppy*|*fd0*) MYCONFIG="$MYCONFDIR"; MYCONFDIR="/media/fd0" ;; esac
++ fi
++ 
++ if [ -z "$INSTALLED" -a -n "$MYCONF" ]; then
++  FOUND_CONFIG=""
++  if [ -n "$MYCONFDIR" ]; then
++   case "$MYCONFDIR" in
++   *floppy*|*fd0*)
++    MYCONFDEVICE="/dev/fd0"
++    MYCONFMOUNTPOINT="/media/fd0"
++   ;;
++   /dev/*)
++    MYCONFDEVICE="${MYCONFDIR##/dev/}"
++    MYCONFDEVICE="/dev/${MYCONFDEVICE%%/*}"
++    MYCONFMOUNTPOINT="/media/${MYCONFDEVICE##/dev/}"
++    MYCONFDIR="/media/${MYCONFDIR##/dev/}"
++   ;;
++   /media/*)
++    MYCONFDEVICE="${MYCONFDIR##/media/}"
++    MYCONFDEVICE="/dev/${MYCONFDEVICE%%/*}"
++    MYCONFMOUNTPOINT="/media/${MYCONFDEVICE##/dev/}"
++   ;;
++    [Aa][Uu][Tt][Oo]|[Ss][Cc][Aa][Nn]|[Ff][Ii][Nn][Dd])
++    MYCONFDIR="$(findfile knoppix.sh)"
++    if [ -n "$MYCONFDIR" ]; then
++     MYCONFDEVICE="${MYCONFDIR##/media/}"
++     MYCONFDEVICE="/dev/${MYCONFDEVICE%%/*}"
++     MYCONFMOUNTPOINT="/media/${MYCONFDEVICE##/dev/}"
++     MYCONFDIR="${MYCONFMOUNTPOINT}"
++    else
++     FOUND_CONFIG="none"
++    fi
++   ;;
++   *)
++    echo "${CRE}${RED}Invalid configdir '$MYCONFDIR' specified (must start with /dev/ or /media/ or 'scan').${NORMAL}"
++    echo "${CRE}${RED}Option ignored.${NORMAL}"
++    FOUND_CONFIG="invalid"
++   ;;
++   esac
++  else
++   MYCONFDEVICE="/dev/fd0"
++   MYCONFMOUNTPOINT="/media/fd0"
++   MYCONFDIR="/media/fd0"
++  fi
++  if [ -z "$FOUND_CONFIG" ]; then
++   echo -n "${CRE}${BLUE}Checking ${MAGENTA}${MYCONFDIR}${BLUE} for KNOPPIX configuration files...${NORMAL}"
++   if trymount "$MYCONFDEVICE" "$MYCONFMOUNTPOINT"; then
++    MYCONFIG="$(ls -1d $MYCONFDIR/[Kk][Nn][Oo][Pp][Pp][Ii][Xx].[Ss][Hh] 2>/dev/null)"
++    if [ -n "$MYCONFIG" -a -f "$MYCONFIG" ]; then
++     echo ""
++     FOUND_CONFIG="yes"
++     echo "${GREEN}Found, now executing ${MAGENTA}$MYCONFIG${GREEN}.${NORMAL}"
++     echo "6" > /proc/sys/kernel/printk
++     . "$MYCONFIG" "$MYCONFDIR" || true
++     echo "0" > /proc/sys/kernel/printk
++    fi
++    umount "$MYCONFMOUNTPOINT" 2>/dev/null
++   fi
++  fi
++  [ -n "$FOUND_CONFIG" ] || echo " ${BLUE}Not present.${NORMAL}"
++ fi
++ 
+  # Execute user-defined knoppix.sh on our boot medium
+  [ -n "$knoppix_dir" ] || knoppix_dir="KNOPPIX"
+  for knoppixsh in /mnt-system/"$knoppix_dir"/knoppix.sh; do

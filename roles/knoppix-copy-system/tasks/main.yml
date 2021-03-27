@@ -3,11 +3,18 @@
     src: /mnt-system/KNOPPIX
     dest: /mnt/boot
 
+- name: Check if boot in /mnt/boot exists
+  stat:
+    path: /mnt/boot/boot
+  register: mnt_boot_boot_stat
+
 - name: Sync /boot to /mnt/boot
   synchronize:
     src: /boot
     dest: /mnt/boot
     copy_links: yes
+  when: not mnt_boot_boot_stat.stat.exists
+
 
 - name: Copy minirt.gz to /mnt/boot
   copy:
