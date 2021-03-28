@@ -1,0 +1,57 @@
+---
+# Playbook to check the current partition situation 
+#
+#
+- name: Install jmespath
+  pip:
+    name: jmespath
+    state: present
+
+- name: Get partition status
+  parted:
+    device: /dev/{{ boot_disk }}
+  register: boot_partitions
+
+- name: Print partitions
+  debug:
+    var: boot_partitions
+
+- name: Calculate size
+  set_fact:
+    boot_disk_size: "{{ boot_partitions.disk.size }}"
+
+- name: Empty areas
+  set_fact:
+    empty: "[
+      start: {{ 1024.0 }}
+      end:   {{ boot_disk_size }}
+      ]"
+
+- name:
+  debug:
+    var: boot_disk_size 
+
+- name:
+  debug:
+    var: empty
+
+- name:
+  set_fact:
+    boot_disk_partitions: "{{ boot_partitions.partitions }}"
+
+- name:
+  debug:
+    var: boot_disk_partitions
+
+- name:
+  set_fact:
+    part: "{{ item }}"
+  loop: "{{ boot_disk_partitions }}"
+
+- name:
+  debug:
+    var: part
+
+- name:
+  debug:
+    var: empty

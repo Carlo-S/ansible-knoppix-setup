@@ -7,6 +7,7 @@
     #remote_user: root
 
   roles:
+    #- knoppix-partition-check
     - knoppix-mnt-system-check
     - knoppix-boot-partition
     - knoppix-copy-system
