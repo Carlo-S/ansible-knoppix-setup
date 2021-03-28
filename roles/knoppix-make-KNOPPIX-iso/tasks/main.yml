@@ -12,7 +12,7 @@
 - name: Copy knoppix-autoconfig
   copy:
     src: /etc/init.d/knoppix-autoconfig
-    dest: /tmp/KNOPPIX2/etc/init.d/knoppix-autoconfig.tst
+    dest: /tmp/KNOPPIX2/etc/init.d/knoppix-autoconfig
     mode: u=rwx,g=rx,o=rx
 
 #- name: Create KNOPPIX3 file
