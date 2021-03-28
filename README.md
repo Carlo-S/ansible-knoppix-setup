@@ -21,7 +21,7 @@ Step1:
     ./start-knoppix-setup
     sudo shutdown -h now
     
-After Step1 the main knoppix files are copied to the harddisk, but the grub bootloader is not yet installed, so make sure the knoppix9.2 iso dvd image is still inserted, boot and start onece again:
+After Step1 the main knoppix files are copied to the harddisk, but the grub bootloader is not yet installed, so make sure the knoppix9.2 iso dvd image is still inserted, boot and start once again:
 
 Step2:
 
@@ -38,6 +38,7 @@ Now you can start preparing the conf filesystem.
 Issues/Todos:
 * Install grub with ansible (I still do not know, why this did not work)
 * Protect the content of the harddisk, by searching for an EMPTY space for the boot partition
-* Use more variables to allow to parameterize the setup
+* hd0 in the boot/grub/menu.lst is fix, but might be wrong (see the grub-install --re-check output)!
 * Make/test this setup for other versions of Knoppix
+* Next ansible script for a conf standard setup!
     
