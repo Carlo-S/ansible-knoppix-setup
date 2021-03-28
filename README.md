@@ -17,6 +17,7 @@ Step1:
 
     git clone https://github.com/carlo-s/ansible-knoppix-setup
     cd ansible-knoppix-setup
+    < Change the config.yml file! >
     ./start-knoppix-setup
     sudo shutdown -h now
     
@@ -26,6 +27,7 @@ Step2:
 
     git clone https://github.com/carlo-s/ansible-knoppix-setup
     cd ansible-knoppix-setup
+    < Change the config.yml file! >
     ./start-knoppix-setup
     sudo shutdown -h now
 
