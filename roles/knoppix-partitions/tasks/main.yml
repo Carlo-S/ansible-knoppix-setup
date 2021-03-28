@@ -28,57 +28,57 @@
     fstype: reiserfs
     state: mounted
 
-- name: Create conf partition
-  parted:
-    device: /dev/sda
-    number: 2
-    #name: conf
-    part_start: 5121MiB
-    part_end: 5633MiB
-    state: present
+      #- name: Create conf partition
+      #  parted:
+      #    device: /dev/sda
+      #    number: 2
+      #    #name: conf
+      #    part_start: 5121MiB
+      #    part_end: 5633MiB
+      #    state: present
 
-- name: Format conf partition
-  filesystem:
-    device: /dev/sda2
-    fstype: ext4
-    state: present
+      #- name: Format conf partition
+      #  filesystem:
+      #    device: /dev/sda2
+      #    fstype: ext4
+      #    state: present
 
-- name: Create conf mount point
-  file:
-    path: /mnt/conf
-    state: directory
+      #- name: Create conf mount point
+      #  file:
+      #    path: /mnt/conf
+      #    state: directory
 
-- name: Mount conf partition
-  mount:
-    path: /mnt/conf
-    src: /dev/sda2
-    fstype: ext4
-    state: mounted
+      #- name: Mount conf partition
+      #  mount:
+      #    path: /mnt/conf
+      #    src: /dev/sda2
+      #    fstype: ext4
+      #    state: mounted
 
-- name: Create data partition
-  parted:
-    device: /dev/sda
-    number: 3
-    #name: conf
-    part_start: 5633MiB
-    part_end: 26113MiB
-    state: present
+      #- name: Create data partition
+      #  parted:
+      #    device: /dev/sda
+      #    number: 3
+      #    #name: conf
+      #    part_start: 5633MiB
+      #    part_end: 26113MiB
+      #    state: present
 
-- name: Format data partition
-  filesystem:
-    device: /dev/sda3
-    fstype: ext4
-    state: present
+      #- name: Format data partition
+      #  filesystem:
+      #    device: /dev/sda3
+      #    fstype: ext4
+      #    state: present
 
-- name: Create conf mount point
-  file:
-    path: /mnt/data
-    state: directory
+      #- name: Create conf mount point
+      #  file:
+      #    path: /mnt/data
+      #    state: directory
 
-- name: Mount data partition
-  mount:
-    path: /mnt/data
-    src: /dev/sda3
-    fstype: ext4
-    state: mounted
+      #- name: Mount data partition
+      #  mount:
+      #    path: /mnt/data
+      #    src: /dev/sda3
+      #    fstype: ext4
+      #    state: mounted
 

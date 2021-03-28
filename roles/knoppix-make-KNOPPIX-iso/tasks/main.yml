@@ -12,7 +12,7 @@
 - name: Copy knoppix-autoconfig
   copy:
     src: /etc/init.d/knoppix-autoconfig
-    dest: /tmp/KNOPPIX3/etc/init.d/knoppix-autoconfig
+    dest: /tmp/KNOPPIX3/etc/init.d/knoppix-autoconfig.tst
 
 #- name: Create KNOPPIX3 file
 #  community.general.iso_create:
