@@ -1,8 +1,13 @@
+---
+# This playbook copies the boot and the KNOPPIX directory to the later
+# /mnt-system. Because /mnt-system might still be on the DVD, the new
+# version is mounted on /mnt/boot
 - name: Sync KNOPPIX to /mnt/boot
   synchronize:
     src: /mnt-system/KNOPPIX
     dest: /mnt/boot
 
+# Sync boot only once, because links mess up the second try
 - name: Check if boot in /mnt/boot exists
   stat:
     path: /mnt/boot/boot
@@ -15,7 +20,7 @@
     copy_links: yes
   when: not mnt_boot_boot_stat.stat.exists
 
-
+# When booting from harddisk, the syslinux directory is gone
 - name: Copy minirt.gz to /mnt/boot
   copy:
     dest: /mnt/boot/boot

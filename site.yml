@@ -8,7 +8,7 @@
 
   roles:
     - knoppix-mnt-system-check
-    - knoppix-partitions
+    - knoppix-boot-partition
     - knoppix-copy-system
     - knoppix-autoconfig-patch
     - knoppix-make-KNOPPIX-iso

@@ -1,0 +1,44 @@
+---
+# This playbook partitions a clean harddisk with a knoppix boot partition
+# This is the dangerous part!!!
+# Please use a {{ boot_pnum }} - partition number - that is not already used
+# and make sure there is 5GB of unused space on your harddisk
+- name: Create boot partition
+  parted:
+    device: "/dev/{{ boot_disk }}"
+    number: "{{ boot_pnum }}"
+    #name: boot
+    part_end: 5121MiB
+    state: present
+
+- name: Format boot partition
+  filesystem:
+    device: "/dev/{{ boot_disk }}{{ boot_pnum }}"
+    fstype: reiserfs
+    state: present
+
+- name: Create /mnt directory 
+  file:
+    path: /mnt
+    state: directory
+
+- name: Link /mnt/boot to /mnt-system (if /mnt-system already from harddisk)
+  file:
+    src: /mnt-system
+    dest: /mnt/boot
+    state: link
+  when: mnt_system_fstype == "reiserfs"
+
+- name: Create boot mount point (if /mnt-system still from DVD)
+  file:
+    path: /mnt/boot
+    state: directory
+  when: mnt_system_fstype == "iso9660"
+
+- name: Mount boot partition (if /mnt-system still from DVD)
+  mount:
+    path: /mnt/boot
+    src: "/dev/{{ boot_disk }}{{ boot_pnum }}"
+    fstype: reiserfs
+    state: mounted
+  when: mnt_system_fstype == "iso9660"

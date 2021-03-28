@@ -1,2 +1,4 @@
+---
+# Please change this two variables for every new Knoppix version
 knoppix_version: 9.2
 kernel_version: 5.10.10

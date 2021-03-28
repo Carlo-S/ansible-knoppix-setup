@@ -1,0 +1,4 @@
+knoppix_version: 9.2
+kernel_version: 5.10.10
+boot_disk: sda
+boot_pnum: 1

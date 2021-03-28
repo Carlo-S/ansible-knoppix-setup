@@ -1,0 +1,2 @@
+boot_disk: sda
+boot_pnum: 1

@@ -1,3 +1,10 @@
+---
+# This playbook inserts a new grub menu into the grub directory.
+# There are two menu entries
+#   1) The Poor Man's Boot with a read only system (should normally be used)
+#   2) The Poor Man's Boot with a read/write system (use to change /mnt-system)
+# To make changes like this one you have to boot from DVD, 
+# have Knoppix auto-detected and mounted, or you used the 2) entry!
 - name: Adding poor man's menu.lst
   template:
     src: menu.lst.j2

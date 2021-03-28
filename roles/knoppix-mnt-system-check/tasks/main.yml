@@ -1,3 +1,7 @@
+---
+# This playbook checks, if we are running Knoppix still from the DVD 
+# or already from the harddisk
+#
 - name: Install jmespath 
   pip:
     name: jmespath 

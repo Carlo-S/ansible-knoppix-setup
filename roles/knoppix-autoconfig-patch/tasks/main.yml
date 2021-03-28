@@ -1,3 +1,7 @@
+---
+# This playbook patches the knoppix-autoconfig file to support the
+# Poor Man's Installation. So it's the heart of this setup!
+# The patch file works already for a lot of old Knoppix versions!
 - name: Patch knoppix-autoconfig
   patch:
     dest: /etc/init.d/knoppix-autoconfig
