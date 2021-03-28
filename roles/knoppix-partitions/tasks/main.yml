@@ -16,10 +16,23 @@
     fstype: reiserfs
     state: present
 
+- name: Create /mnt directory 
+  file:
+    path: /mnt
+    state: directory
+
+- name: Link /mnt/boot to /mnt-system (if /mnt-system already from disk)
+  file:
+    src: /mnt-system
+    dest: /mnt/boot
+    state: link
+  when: mnt_system_fstype == "reiserfs"
+
 - name: Create boot mount point
   file:
     path: /mnt/boot
     state: directory
+  when: mnt_system_fstype == "iso9660"
 
 - name: Mount boot partition
   mount:
@@ -27,6 +40,7 @@
     src: /dev/sda1
     fstype: reiserfs
     state: mounted
+  when: mnt_system_fstype == "iso9660"
 
       #- name: Create conf partition
       #  parted:

@@ -12,5 +12,5 @@
     - knoppix-copy-system
     - knoppix-autoconfig-patch
     - knoppix-make-KNOPPIX-iso
-    #- knoppix-grub-menu
-    #- knoppix-grub-install
+    - knoppix-grub-menu
+    - knoppix-grub-install
