@@ -14,7 +14,7 @@
 - name: Format boot partition
   filesystem:
     device: "/dev/{{ boot_disk }}{{ boot_pnum }}"
-    fstype: reiserfs
+    fstype: "{{ boot_type }}"
     state: present
 
 - name: Create /mnt directory 
@@ -27,7 +27,7 @@
     src: /mnt-system
     dest: /mnt/boot
     state: link
-  when: mnt_system_fstype == "reiserfs"
+  when: mnt_system_fstype == "{{ boot_type }}"
 
 - name: Create boot mount point (if /mnt-system still from DVD)
   file:
@@ -39,6 +39,6 @@
   mount:
     path: /mnt/boot
     src: "/dev/{{ boot_disk }}{{ boot_pnum }}"
-    fstype: reiserfs
+    fstype: "{{ boot_type }}"
     state: mounted
   when: mnt_system_fstype == "iso9660"

@@ -1,6 +1,7 @@
 knoppix_version: 9.2
 kernel_version: 5.10.10
 boot_disk: sda
-boot_pnum: 1
+boot_pnum: 11
+boot_type: ext4
 conf_disk: sda
-conf_pnum: 2
+conf_pnum: 4
