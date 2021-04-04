@@ -3,19 +3,22 @@
 # This is the dangerous part!!!
 # Please use a {{ boot_pnum }} - partition number - that is not already used
 # and make sure there is 5GB of unused space on your harddisk
-- name: Create boot partition
-  parted:
-    device: "/dev/{{ boot_disk }}"
-    number: "{{ boot_pnum }}"
-    #name: boot
-    part_end: 5121MiB
-    state: present
+#
+# This is much to dangerous!!!!!
+# -->
+#- name: Create boot partition
+#  parted:
+#    device: "/dev/{{ boot_disk }}"
+#    number: "{{ boot_pnum }}"
+#    #name: boot
+#    part_end: 5121MiB
+#    state: present
 
-- name: Format boot partition
-  filesystem:
-    device: "/dev/{{ boot_disk }}{{ boot_pnum }}"
-    fstype: "{{ boot_type }}"
-    state: present
+#- name: Format boot partition
+#  filesystem:
+#    device: "/dev/{{ boot_disk }}{{ boot_pnum }}"
+#    fstype: "{{ boot_type }}"
+#    state: present
 
 - name: Create /mnt directory 
   file:

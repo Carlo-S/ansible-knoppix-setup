@@ -1,7 +1,7 @@
 ---
 # This playbook installs knoppix on harddisk on all sites
 
-- name: partition an empty harddisk
+- name: Setup Knoppix 9.2 on harddisk (please edit config.yml first!) 
   hosts: all
   become: yes 
     #remote_user: root
