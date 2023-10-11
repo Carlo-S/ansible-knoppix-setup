@@ -1,0 +1,13 @@
+git clone https://github.com/carlo-s/ansible-knoppix-setup
+cd ansible-knoppix-setup
+vi config.yml
+cd /mnt
+sudo ln -s /media/sda5 boot
+sudo ln -s /media/sda6 conf
+cd
+cp -r /mnt/conf/ssh .ssh
+git remote set-url origin git@github.com:carlo-s/ansible-knoppix-setup
+git status
+git add .
+git commit -m "<message<"
+git push
