@@ -1,7 +1,7 @@
-knoppix_version: 9.2
-kernel_version: 5.10.10
+knoppix_version: 9.3
+kernel_version: 5.16.12
 boot_disk: sda
-boot_pnum: 11
+boot_pnum: 5
 boot_type: reiserfs
 conf_disk: sda
-conf_pnum: 4
+conf_pnum: 6

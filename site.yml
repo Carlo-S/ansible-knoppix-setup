@@ -8,8 +8,8 @@
 
   roles:
     #- knoppix-partition-check
-    - knoppix-mnt-system-check
-    - knoppix-boot-partition
+    #- knoppix-mnt-system-check
+    #- knoppix-boot-partition
     - knoppix-copy-system
     - knoppix-autoconfig-patch
     - knoppix-make-KNOPPIX-iso
