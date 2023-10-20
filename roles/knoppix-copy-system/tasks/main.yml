@@ -2,6 +2,13 @@
 # This playbook copies the boot and the KNOPPIX directory to the later
 # /mnt-system. Because /mnt-system might still be on the DVD, the new
 # version is mounted on /mnt/boot
+- name: Mount BOOT on /mnt/boot
+  mount: 
+    path: /mnt/boot
+    src: /dev/{{ boot_disk }}{{ boot_pnum }}
+    fstype: reiserfs
+    state: mounted
+
 - name: Sync KNOPPIX to /mnt/boot
   synchronize:
     src: /mnt-system/KNOPPIX
@@ -25,4 +32,4 @@
   copy:
     dest: /mnt/boot/boot
     src: /mnt-system/boot/syslinux/minirt.gz
-  when: mnt_system_fstype == "iso9660"
+  when: not mnt_boot_boot_stat.stat.exists
