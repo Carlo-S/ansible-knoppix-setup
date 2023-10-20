@@ -24,6 +24,7 @@
   synchronize:
     src: /boot
     dest: /mnt/boot
+    perm: true
     copy_links: yes
   when: not mnt_boot_boot_stat.stat.exists
 
