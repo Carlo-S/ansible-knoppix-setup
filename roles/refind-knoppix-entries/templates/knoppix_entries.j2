@@ -1,0 +1,13 @@
+menuentry "Knoppix_{{ knoppix_version }}" {
+     icon EFI/refind/icons/os_linux.png
+     volume boot{{ knoppix_version }}
+     loader boot\vmlinuz-{{ kernel_version }}-64
+     options "root=/dev/{{ boot_disk }}{{ boot_pnum }} ro ramdisk_size=100000 lang=de keyboard=de apm=power-off nomce quiet fromhd=/dev/{{ boot_disk }}{{ boot_pnum }} initrd=/boot/minirt.gz myconf=/dev/{{ conf_disk }}{{ conf_pnum }} noimage"
+}
+ 
+menuentry "Knoppix_{{ knoppix_version }}rw" {
+     icon EFI/refind/icons/os_linux.png
+     volume boot{{ knoppix_version }}
+     loader boot\vmlinuz-{{ kernel_version }}-64
+     options "root=/dev/{{ boot_disk }}{{ boot_pnum }} rw ramdisk_size=100000 lang=de keyboard=de apm=power-off nomce quiet fromhd=/dev/{{ boot_disk }}{{ boot_pnum }} initrd=/boot/minirt.gz myconf=/dev/{{ conf_disk }}{{ conf_pnum }} noimage"
+}

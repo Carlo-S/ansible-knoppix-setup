@@ -1,0 +1,15 @@
+---
+- name: Create Knoppix menu entries for refind
+  template:
+    src: templates/knoppix_entries.j2
+    dest: /tmp/knoppix_entries
+
+- name: Copy refind conf 
+  copy:
+    src: /home/knoppix/refind/refind/refind.conf-sample
+    dest: /home/knoppix/refind/refind/refind.conf
+
+- name: Add knoppix entries
+  blockinfile:
+    block: "{{ lookup('ansible.builtin.file','/tmp/knoppix_entries') }}"
+    path: /home/knoppix/refind/refind/refind.conf

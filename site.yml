@@ -11,7 +11,9 @@
     #- knoppix-mnt-system-check
     #- knoppix-boot-partition
     - knoppix-copy-system
-    #- knoppix-autoconfig-patch
-    #- knoppix-make-KNOPPIX-iso
+    - knoppix-autoconfig-patch
+    - knoppix-make-KNOPPIX-iso
+    - refind-download
+    - refind-knoppix-entries
     #- knoppix-grub-menu
     #- knoppix-grub-install

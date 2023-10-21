@@ -13,6 +13,9 @@
   synchronize:
     src: /mnt-system/KNOPPIX
     dest: /mnt/boot
+    rsync_opts:
+      - "--chmod=F644"
+      - "--chmod=D755"
 
 # Sync boot only once, because links mess up the second try
 - name: Check if boot in /mnt/boot exists
@@ -24,8 +27,10 @@
   synchronize:
     src: /boot
     dest: /mnt/boot
-    perm: true
     copy_links: yes
+    rsync_opts:
+      - "--chmod=F644"  
+      - "--chmod=D755"
   when: not mnt_boot_boot_stat.stat.exists
 
 # When booting from harddisk, the syslinux directory is gone

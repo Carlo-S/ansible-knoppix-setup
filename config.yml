@@ -1,5 +1,7 @@
 knoppix_version: 9.3
 kernel_version: 5.16.12
+efi_disk: sda
+efi_pnum: 1
 boot_disk: sda
 boot_pnum: 5
 boot_type: reiserfs

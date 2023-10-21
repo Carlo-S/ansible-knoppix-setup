@@ -1,0 +1,55 @@
+---
+# This playbook downloads the newest refind binaries 
+- name: Download refind 
+  get_url: 
+    url: https://sourceforge.net/projects/refind/files/latest/download
+    dest: /home/knoppix
+  register: download_refind_zip
+
+- name: Show name of downloaded file
+  debug:
+    var: download_refind_zip.dest
+
+#- name: Create refind directory
+#  file:
+#    path: /home/knoppix/refind
+#    state: directory
+
+#- name: Find refind zip
+#  find:
+#    path: /home/knoppix
+#    pattern: "refind*.zip"
+#  register: refind_zip_files
+
+- name: Unarchive refind
+  unarchive:
+    src: "{{download_refind_zip.dest}}" 
+    dest: /home/knoppix
+    list_files: true
+  register: unarchive_result
+
+- name: Show unarchive result 
+  debug:
+    var: unarchive_result.files[0]
+
+- name: Change name to refind only
+  command: mv /home/knoppix/{{unarchive_result.files[0][:-1]}} /home/knoppix/refind
+
+- name: Find unnecessary files 
+  find:
+    path: /home/knoppix/refind/refind
+    patterns: '*ia32*,*aa64*'
+    file_type: any
+  register: ia32_files
+
+- name: Show ia32 files
+  debug:
+    var: ia32_files 
+
+- name: Remove ia32 files
+  file:
+    path: "{{item.path}}"
+    state: absent
+  with_items:
+    - "{{ia32_files.files}}"
+
