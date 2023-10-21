@@ -1,0 +1,13 @@
+---
+- name: Make sure efi is mounted
+  mount:
+    path: /mnt/efi
+    src: "/dev/{{ efi_disk }}{{ efi_pnum }}"
+    fstype: vfat
+    state: mounted
+
+- name: Sync refind to /mnt/efi
+  synchronize:
+    src: /home/knoppix/refind/refind
+    dest: /mnt/efi/EFI
+    archive: false

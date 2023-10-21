@@ -15,5 +15,6 @@
     - knoppix-make-KNOPPIX-iso
     - refind-download
     - refind-knoppix-entries
+    - refind-efi-setup
     #- knoppix-grub-menu
     #- knoppix-grub-install
