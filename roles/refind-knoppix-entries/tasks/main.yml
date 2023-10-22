@@ -13,3 +13,5 @@
   blockinfile:
     block: "{{ lookup('ansible.builtin.file','/tmp/knoppix_entries') }}"
     path: /home/knoppix/refind/refind/refind.conf
+
+# Todo: Delete tmp file
